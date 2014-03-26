@@ -140,11 +140,17 @@ GSVPANO.PanoDepthLoader = function (parameters) {
             }
         }
 
-        return {
+        var depthMapData = {
             width: w,
             height: h,
-            depthMap: depthMap
+            depthMap: depthMap,
+            max: d3.max(depthMap),
+            min: d3.min(depthMap)
         };
+
+        console.log('depthMapData:', depthMapData);
+
+        return depthMapData;
     }
 
     this.parse = function(depthMap) {
