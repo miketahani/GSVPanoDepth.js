@@ -11,6 +11,17 @@
             padding: 0;
         }
 
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        canvas.top {
+            z-index: 10;
+            opacity: 0.5;
+        }
+
     </style>
 
     <script src='js/three.r66.js'></script>
@@ -58,6 +69,7 @@
                 var x, y, canvas, context, image, w, h, c;
                 
                 canvas = document.createElement("canvas");
+                canvas.setAttribute('class', 'top');
                 context = canvas.getContext('2d');
 
                 w = this.depthMap.width;
@@ -83,8 +95,11 @@
                         // every other so we cut down on the number of particles
                         // if ((x+y)%2 === 0) {
                             // console.log(x, y);
-                            var z = this.depthMap.depthMap[y*w + x];
-                            var vertex = new THREE.Vector3(x, -y, zscale(z));    // prob gonna have to scale x and y
+                            // var yy = c;
+
+                            var vertex = new THREE.Vector3(x, -y, c);
+                            // var z = this.depthMap.depthMap[y*w + x];
+                            // var vertex = new THREE.Vector3(x, -y, zscale(z));    // prob gonna have to scale x and y
                             geometry.vertices.push(vertex);
                         // }
                     }
@@ -103,7 +118,8 @@
             }
 
             _panoLoader.onPanoramaLoad = function() {
-                document.body.appendChild(this.canvas);
+                // document.body.appendChild(this.canvas);
+                this.canvas.setAttribute('class', 'top');
                 _depthLoader.load(this.panoId);
             };
 
